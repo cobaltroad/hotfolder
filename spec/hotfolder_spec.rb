@@ -1,11 +1,25 @@
 require 'spec_helper'
 
 describe Hotfolder do
-  it 'has a version number' do
-    expect(Hotfolder::VERSION).not_to be nil
+  context 'no hotfolder_ingest_type' do
+    class TestClass
+      include Hotfolder
+    end
+
+    specify {
+      expect { TestClass.new }.to raise_error "hotfolder_ingest_type is not set"
+    }
   end
 
-  it 'does something useful' do
-    expect(false).to eq(true)
+  context 'invalid hotfolder_ingest_type' do
+    class TestClass2
+      include Hotfolder
+
+      hotfolder_ingest_type "foo"
+    end
+
+    specify {
+      expect { TestClass2.new }.to raise_error "hotfolder_ingest_type is invalid"
+    }
   end
 end

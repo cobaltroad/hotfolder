@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in hotfolder.gemspec
+gem "nummer", git: 'git@github.com:spedmg/nummer.git', tag: '1.4.2'
+
 gemspec
