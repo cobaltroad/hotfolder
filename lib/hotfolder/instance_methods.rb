@@ -13,10 +13,7 @@ module Hotfolder
     end
 
     def in_progress
-      # response = RunnerClient::API.get_in_progress_ingests(@ingest_type)
-      # raise 'Error retrieving in progress ingests' unless response.success?
-      #
-      # response.in_progress_ingests.map { |ingest| ingest.file_name }
+      GetInProgressCommand.execute(@ingest_type)
     end
 
     def hotfolder_logger

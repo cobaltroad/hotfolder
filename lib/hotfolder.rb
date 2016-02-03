@@ -1,4 +1,5 @@
 require "nummer"
+require "runner_client"
 require_relative "hotfolder/class_methods"
 require_relative "hotfolder/instance_methods"
 
