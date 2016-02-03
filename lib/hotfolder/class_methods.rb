@@ -8,6 +8,11 @@ module Hotfolder
       @@logger = logger
       @@logger_method = logger_method
     end
+
+    def config(config)
+      class_variable_set(:@@config, config)
+      self
+    end
   end
 
   class << self

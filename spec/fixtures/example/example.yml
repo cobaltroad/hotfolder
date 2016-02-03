@@ -1,0 +1,19 @@
+default: &default
+  name: Example Config
+  aspera_username: foobar
+  aspera_password: abcdef123
+  source_file_path: './Some Directory/Path'
+  runner_path_id: 100
+  file_pickup_delay_hours: 240
+  upload_batch_size_mb: 1024
+development:
+  <<: *default
+test:
+  <<: *default
+integration:
+  <<: *default
+staging:
+  <<: *default
+production:
+  <<: *default
+
