@@ -16,14 +16,6 @@ module Hotfolder
       GetInProgressCommand.execute(@ingest_type)
     end
 
-    def hotfolder_logger
-      @logger
-    end
-
-    def hotfolder_logger=(logger)
-      @logger = logger
-    end
-
     private
 
     def validate
