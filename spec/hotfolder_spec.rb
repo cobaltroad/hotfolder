@@ -2,34 +2,35 @@ require 'spec_helper'
 
 describe Hotfolder do
   context 'no hotfolder_ingest_type' do
-    class BadClass1
-      include Hotfolder
+    let(:test_class) { Class.new }
+    before do
+      test_class.send :include, Hotfolder
     end
 
     specify {
-      expect { BadClass1.new }.to raise_error "hotfolder_ingest_type is not set"
+      expect { test_class.new }.to raise_error "hotfolder_ingest_type is not set"
     }
   end
 
   context 'invalid hotfolder_ingest_type' do
-    class BadClass2
-      include Hotfolder
-
-      hotfolder_ingest_type "foo"
+    let(:test_class) { Class.new }
+    before do
+      test_class.send :include, Hotfolder
+      test_class.send :hotfolder_ingest_type, "foo"
     end
 
     specify {
-      expect { BadClass2.new }.to raise_error "hotfolder_ingest_type is invalid"
+      expect { test_class.new }.to raise_error "hotfolder_ingest_type is invalid"
     }
   end
 
   context 'valid hotfolder_ingest_type' do
-    class TestClass
-      include Hotfolder
-
-      hotfolder_ingest_type 'runner'
+    let(:test_class) { Class.new }
+    before do
+      test_class.send :include, Hotfolder
+      test_class.send :hotfolder_ingest_type, "runner"
     end
-    let(:test_instance) { TestClass.new }
+    let(:test_instance) { test_class.new }
 
     context '.in_progress', :vcr do
       subject { test_instance.ingest_type }
