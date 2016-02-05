@@ -51,10 +51,10 @@ describe Hotfolder do
       YAML.load_file(path)["test"]
     end
     let(:test_instance) { Example.config(config).new }
-    subject { test_instance.source_file_path }
+    subject { test_instance.name }
 
     it 'reads the config file from a default location' do
-      expect(subject).to eq './Some Directory/Path'
+      expect(subject).to eq 'Example Config'
     end
   end
 end

@@ -7,7 +7,7 @@ module Hotfolder
       raise 'Error retrieving in progress ingests' unless response.success?
 
       in_progress = response.in_progress_ingests.map { |ingest| ingest.file_name }
-      Hotfolder.log "In progress ingests asset names: #{in_progress}"
+      Hotfolder.log "In-progress ingest asset names: #{in_progress}"
       in_progress
     end
   end

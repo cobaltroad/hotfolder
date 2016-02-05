@@ -1,6 +1,8 @@
 require "nummer"
 require "runner_client"
+require "httparty"
 require_relative "hotfolder/class_methods"
+require_relative "hotfolder/instance_helpers"
 require_relative "hotfolder/instance_methods"
 
 base_folder = File.dirname(__FILE__)

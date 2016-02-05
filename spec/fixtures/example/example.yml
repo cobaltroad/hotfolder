@@ -2,6 +2,7 @@ default: &default
   name: Example Config
   aspera_username: foobar
   aspera_password: abcdef123
+  aspera_endpoint: 'https://10.16.48.172:9092'
   source_file_path: './Some Directory/Path'
   runner_path_id: 100
   file_pickup_delay_hours: 240
