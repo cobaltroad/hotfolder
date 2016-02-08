@@ -9,7 +9,7 @@ module Hotfolder
                 basic_auth: basic_auth(username, password),
                 verify: false)
       raise 'Error retrieving hotfolder files' unless response.success?
-      files = JSON.parse(response.body)['items']
+      files = Hotfolder::Hotfile.build_from_response(response)
       unless files.blank?
         Hotfolder.log "Hotfolder asset names: #{logged(files)}"
       end
@@ -47,8 +47,8 @@ module Hotfolder
     def logged(array)
       array.map do |obj|
         {
-          name: obj['basename'],
-          mtime: obj['mtime']
+          name: obj.basename,
+          mtime: obj.mtime
         }
       end
     end

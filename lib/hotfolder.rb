@@ -9,6 +9,7 @@ base_folder = File.dirname(__FILE__)
 
 [
   'commands',
+  'models',
 ].each do |subfolder|
   path = File.join(base_folder, 'hotfolder', subfolder, '**', '*.rb')
   Dir[path].each { |f| require f }

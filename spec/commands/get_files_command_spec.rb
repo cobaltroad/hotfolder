@@ -36,7 +36,9 @@ describe Hotfolder::GetFilesCommand do
       end
 
       specify {
-        expect(subject).to eq expected
+        expect(subject).to be_an(Array)
+        expect(subject.first).to be_a(Hotfolder::Hotfile)
+        expect(subject.first.basename).to eq 'JEOP5222.mxf'
       }
     end
 

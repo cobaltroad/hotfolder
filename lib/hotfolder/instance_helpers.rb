@@ -4,9 +4,8 @@ module Hotfolder
     def inspect
       [
         "<#{self.class.name} ",
-        "ingest_type:\"#{@ingest_type}\" ",
-        "source_file_path:\"#{@source_file_path}\"",
-        ">"
+        "ingest_type:\"#{@ingest_type}\", ",
+        "source_file_path:\"#{@source_file_path}\">"
       ].join
     end
 

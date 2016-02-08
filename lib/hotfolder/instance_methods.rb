@@ -27,10 +27,17 @@ module Hotfolder
     def files
       GetFilesCommand.execute(
         @aspera_endpoint,
-        @aspera_path,
+        @source_file_path,
         @aspera_username,
         @aspera_password
       )
+    end
+
+    def new_files
+      in_progress_files = in_progress
+      files.select do |file|
+        !in_progress_files.include? file['basename']
+      end
     end
 
     private
