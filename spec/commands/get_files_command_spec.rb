@@ -18,22 +18,6 @@ describe Hotfolder::GetFilesCommand do
 
     context 'returns items' do
       let(:fixture) { 'list_items.yml' }
-      let(:expected) do
-        [
-          {
-            "path"=>"DMG Runner/Integration/JEOP5222.mxf",
-            "basename"=>"JEOP5222.mxf",
-            "type"=>"file",
-            "size"=>37389884,
-            "mtime"=>"2015-12-18T19:33:51Z",
-            "permissions"=>[
-              {"name"=>"view"},
-              {"name"=>"edit"},
-              {"name"=>"delete"}
-            ]
-          }
-        ]
-      end
 
       specify {
         expect(subject).to be_an(Array)
@@ -44,10 +28,9 @@ describe Hotfolder::GetFilesCommand do
 
     context 'not found' do
       let(:fixture) { 'list_items_no_such_directory.yml' }
-      let(:expected) { nil }
 
       specify {
-        expect(subject).to eq expected
+        expect(subject).to eq nil
       }
     end
   end

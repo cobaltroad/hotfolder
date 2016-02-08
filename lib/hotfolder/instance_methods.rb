@@ -36,7 +36,13 @@ module Hotfolder
     def new_files
       in_progress_files = in_progress
       files.select do |file|
-        !in_progress_files.include? file['basename']
+        !in_progress_files.include? file.basename
+      end
+    end
+
+    def ready_files
+      new_files.select do |file|
+        file.ready?(@file_pickup_delay_hours)
       end
     end
 

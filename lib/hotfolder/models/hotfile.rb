@@ -22,6 +22,12 @@ module Hotfolder
       ].join
     end
 
+    def ready?(delay_in_hours)
+      seconds_in_an_hour = 3600
+      delayed_time = Time.now - (seconds_in_an_hour * delay_in_hours)
+      @mtime < delayed_time
+    end
+
     class << self
       def build_from_response(response)
         items = JSON.parse(response.body)['items']
