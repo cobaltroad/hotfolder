@@ -11,7 +11,7 @@ module Hotfolder
     attr_reader :file_pickup_delay_hours
     attr_reader :ingest_type
     attr_reader :runner_path_id
-    attr_reader :upload_batch_size_mb
+    attr_reader :files_per_batch
 
     def initialize
       load_config_hash
@@ -61,7 +61,7 @@ module Hotfolder
 
         @file_pickup_delay_hours = hash[:file_pickup_delay_hours]
         @runner_path_id          = hash[:runner_path_id]
-        @upload_batch_size_mb    = hash[:upload_batch_size_mb]
+        @files_per_batch         = hash[:files_per_batch]
       end
     end
 

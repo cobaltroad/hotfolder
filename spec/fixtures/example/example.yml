@@ -6,7 +6,7 @@ default: &default
   source_file_path: './Some Directory/Path'
   runner_path_id: 100
   file_pickup_delay_hours: 240
-  upload_batch_size_mb: 1024
+  files_per_batch: 2
 development:
   <<: *default
 test:
