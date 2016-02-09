@@ -16,13 +16,31 @@ module Hotfolder
 
     def inspect
       [
-        "<#{self.class.name} ",
-        "basename: \"#{@basename}\", ",
-        "path: \"#{@path}\", ",
-        "mtime: \"#{@mtime}\", ",
-        "size: #{@size}, ",
-        "metadata: #{@metadata || 'nil'}>"
-      ].join
+        "<#{self.class.name} basename: \"#{@basename}\"",
+        "path: \"#{@path}\"",
+        "mtime: \"#{@mtime}\"",
+        "size: #{@size}",
+        "slug: \"#{slug}\"",
+        "revision: #{revision}",
+        "gpms_ids: #{gpms_ids || 'nil'}",
+        "folder_ids: #{folder_ids || 'nil'}>"
+      ].join(', ')
+    end
+
+    def slug
+      @metadata.try(:slug)
+    end
+
+    def revision
+      @metadata.try(:revision)
+    end
+
+    def gpms_ids
+      @metadata.try(:gpms_ids)
+    end
+
+    def folder_ids
+      @metadata.try(:folder_ids)
     end
 
     def now

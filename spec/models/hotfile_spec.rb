@@ -53,21 +53,27 @@ describe Hotfolder::Hotfile do
     context 'no revision' do
       specify {
         expect(instance.metadata).to be_a(Hotfolder::Hotmetadata)
-        expect(instance.metadata.slug).to eq 'ABCD1234'
-        expect(instance.metadata.revision).to eq 0
+        expect(instance.slug).to eq 'ABCD1234'
+        expect(instance.revision).to eq 0
       }
     end
 
     context 'revision but no number' do
       let(:basename) { 'ABCD1234rev@.MXF' }
 
-      specify { expect(instance.metadata.revision).to eq 1 }
+      specify { expect(instance.revision).to eq 1 }
     end
 
     context 'revision and number' do
       let(:basename) { 'ABCD123rev3@.MXF' }
 
-      specify { expect(instance.metadata.revision).to eq 3 }
+      specify { expect(instance.revision).to eq 3 }
+    end
+
+    context 'unknown file name parse' do
+      let(:basename) { 'SOME_OTHER_FILE.jpg' }
+
+      specify { expect(instance.slug).to eq '' }
     end
   end
 end
