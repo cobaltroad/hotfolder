@@ -20,27 +20,12 @@ module Hotfolder
         "path: \"#{@path}\"",
         "mtime: \"#{@mtime}\"",
         "size: #{@size}",
-        "slug: \"#{slug}\"",
-        "revision: #{revision}",
-        "gpms_ids: #{gpms_ids || 'nil'}",
-        "folder_ids: #{folder_ids || 'nil'}>"
+        "metadata: #{metadata_string}>"
       ].join(', ')
     end
 
-    def slug
-      @metadata.try(:slug)
-    end
-
-    def revision
-      @metadata.try(:revision)
-    end
-
-    def gpms_ids
-      @metadata.try(:gpms_ids)
-    end
-
-    def folder_ids
-      @metadata.try(:folder_ids)
+    def metadata_string
+      @metadata.nil? ? 'nil' : @metadata
     end
 
     def now
@@ -53,8 +38,12 @@ module Hotfolder
       @mtime.to_i < delayed_time
     end
 
+    def gather_metadata!
+      @metadata = Hotmetadata.new(basename: @basename)
+    end
+
     def upload!
-      @metadata = Hotmetadata.new(@basename)
+      Hotfolder.log "Creating Runner records"
     end
 
     class << self
