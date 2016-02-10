@@ -41,9 +41,11 @@ module Hotfolder
     end
 
     def ready_files
-      new_files.select do |file|
-        file.ready?(@file_pickup_delay_hours)
-      end
+      ReadyFilesCommand.execute(
+        new_files,
+        @file_pickup_delay_hours,
+        @files_per_batch
+      )
     end
 
     private

@@ -1,0 +1,90 @@
+--- 
+self: 
+  path: DMG Runner/Generic Hotfolder/Development
+  basename: Development
+  type: directory
+  size: 0
+  mtime: "2016-02-09T22:14:31Z"
+  permissions: 
+  - name: view
+  - name: edit
+  - name: delete
+items: 
+- path: DMG Runner/Generic Hotfolder/Development/.DS_Store
+  basename: .DS_Store
+  type: file
+  size: 6148
+  mtime: "2016-02-09T22:15:34Z"
+  permissions: 
+  - name: view
+  - name: edit
+  - name: delete
+- path: DMG Runner/Generic Hotfolder/Development/formation.mp4
+  basename: formation.mp4
+  type: file
+  size: 111855201
+  mtime: "2016-02-09T00:31:53Z"
+  permissions: 
+  - name: view
+  - name: edit
+  - name: delete
+- path: DMG Runner/Generic Hotfolder/Development/fixing_bugs_in_prod.mp4
+  basename: fixing_bugs_in_prod.mp4
+  type: file
+  size: 1420434
+  mtime: "2015-12-16T19:22:19Z"
+  permissions: 
+  - name: view
+  - name: edit
+  - name: delete
+- path: DMG Runner/Generic Hotfolder/Development/why_is_this_piece_of_code_here.mp4
+  basename: why_is_this_piece_of_code_here.mp4
+  type: file
+  size: 121324
+  mtime: "2015-12-16T19:22:08Z"
+  permissions: 
+  - name: view
+  - name: edit
+  - name: delete
+- path: DMG Runner/Generic Hotfolder/Development/04-egghead-angular-2-events-in-depth.mp4
+  basename: 04-egghead-angular-2-events-in-depth.mp4
+  type: file
+  size: 3907103
+  mtime: "2015-12-10T02:09:32Z"
+  permissions: 
+  - name: view
+  - name: edit
+  - name: delete
+- path: DMG Runner/Generic Hotfolder/Development/03-egghead-angular-2-using-events-and-refs.mp4
+  basename: 03-egghead-angular-2-using-events-and-refs.mp4
+  type: file
+  size: 29368966
+  mtime: "2015-12-10T02:09:31Z"
+  permissions: 
+  - name: view
+  - name: edit
+  - name: delete
+- path: DMG Runner/Generic Hotfolder/Development/02-egghead-angular-2-writing-a-simple-angular-2-component.mp4
+  basename: 02-egghead-angular-2-writing-a-simple-angular-2-component.mp4
+  type: file
+  size: 5210582
+  mtime: "2015-12-10T02:09:00Z"
+  permissions: 
+  - name: view
+  - name: edit
+  - name: delete
+- path: DMG Runner/Generic Hotfolder/Development/01-egghead-angular-2-say-hello-world-to-angular-2.mp4
+  basename: 01-egghead-angular-2-say-hello-world-to-angular-2.mp4
+  type: file
+  size: 4752651
+  mtime: "2015-12-10T02:07:46Z"
+  permissions: 
+  - name: view
+  - name: edit
+  - name: delete
+item_count: 8
+total_count: 8
+parameters: 
+  path: DMG Runner/Generic Hotfolder/Development
+  skip: 0
+  count: 100

@@ -32,7 +32,7 @@ module Hotfolder
     def browse_body(path)
       {
         'path' => path,
-        'sort' => 'size_d',
+        'sort' => 'mtime_d',
         'filters' => {}
       }.to_json
     end
