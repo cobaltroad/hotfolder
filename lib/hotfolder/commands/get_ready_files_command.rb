@@ -1,5 +1,5 @@
 module Hotfolder
-  module ReadyFilesCommand
+  module GetReadyFilesCommand
     extend self
 
     def execute(new_hotfiles, delay_in_hours, limit)

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Hotfolder::ReadyFilesCommand do
+describe Hotfolder::GetReadyFilesCommand do
   describe '.execute' do
     before do
       allow_any_instance_of(Hotfolder::Hotfile)
@@ -23,7 +23,7 @@ describe Hotfolder::ReadyFilesCommand do
 
       specify { expect(subject.length).to eq 6 }
     end
-    
+
     context 'late enough for all files' do
       let(:now) { Time.parse('2016-02-11T23:00:00Z').to_i }
 

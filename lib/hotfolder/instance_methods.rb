@@ -20,11 +20,11 @@ module Hotfolder
       validate
     end
 
-    def in_progress
+    def get_in_progress
       GetInProgressCommand.execute(@ingest_type)
     end
 
-    def files
+    def get_files
       GetFilesCommand.execute(
         @aspera_endpoint,
         @source_file_path,
@@ -33,16 +33,16 @@ module Hotfolder
       )
     end
 
-    def new_files
-      in_progress_files = in_progress
-      files.select do |file|
+    def get_new_files
+      in_progress_files = get_in_progress
+      get_files.select do |file|
         !in_progress_files.include? file.basename
       end
     end
 
-    def ready_files
-      ReadyFilesCommand.execute(
-        new_files,
+    def get_ready_files
+      GetReadyFilesCommand.execute(
+        get_new_files,
         @file_pickup_delay_hours,
         @files_per_batch
       )
