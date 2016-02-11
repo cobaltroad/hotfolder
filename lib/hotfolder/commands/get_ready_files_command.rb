@@ -6,6 +6,7 @@ module Hotfolder
       ready = new_hotfiles.select do |hotfile|
         hotfile.ready? delay_in_hours
       end
+      Hotfolder.log "Ready files: #{ready.map(&:basename)}"
       ready.first(limit)
     end
   end
