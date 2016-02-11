@@ -7,6 +7,8 @@ default: &default
   runner_path_id: 100
   file_pickup_delay_hours: 240
   files_per_batch: 2
+  class_name: Example
+  metadata_class_name: ExampleMetadata
 development:
   <<: *default
 test:

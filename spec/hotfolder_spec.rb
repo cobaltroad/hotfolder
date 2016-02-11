@@ -44,6 +44,7 @@ describe Hotfolder do
   context 'loads a config file' do
     before do
       require_relative 'fixtures/example/example'
+      require_relative 'fixtures/example/example_metadata'
     end
     let(:config) do
       root = File.dirname(__FILE__)

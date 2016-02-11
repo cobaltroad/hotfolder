@@ -38,8 +38,9 @@ module Hotfolder
       @mtime.to_i < delayed_time
     end
 
-    def gather_metadata!
-      @metadata = Hotmetadata.new(basename: @basename)
+    def build_metadata_using(klass)
+      Hotfolder.log "Building metadata using #{klass}"
+      @metadata = klass.new(self)
     end
 
     def upload!

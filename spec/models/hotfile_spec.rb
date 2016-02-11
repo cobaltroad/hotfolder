@@ -45,12 +45,17 @@ describe Hotfolder::Hotfile do
     end
   end
 
-  describe '.gather_metadata!' do
-    subject { instance.gather_metadata! }
+  describe '.build_metadata_using' do
+    let(:test_class) { Class.new }
+    before do
+      test_class.send :define_method, :initialize, ->(does_nothing) {}
+    end
+
+    subject { instance.build_metadata_using(test_class) }
 
     specify {
       subject
-      expect(instance.metadata).to be_a(Hotfolder::Hotmetadata)
+      expect(instance.metadata).to be_a(test_class)
     }
   end
 end
