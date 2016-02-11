@@ -43,10 +43,6 @@ module Hotfolder
       @metadata = klass.new(self)
     end
 
-    def upload!
-      Hotfolder.log "Creating Runner records"
-    end
-
     class << self
       def build_from_response(response)
         items = JSON.parse(response.body)['items']

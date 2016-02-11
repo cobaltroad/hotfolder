@@ -50,11 +50,28 @@ module Hotfolder
       )
     end
 
-    def gather_metadata!(ready_files)
-      ready_files.map do |file|
+    def gather_metadata!
+      @files ||= get_ready_files.map do |file|
         file.build_metadata_using(@metadata_class)
         file
       end
+    end
+
+    def upload!
+      gather_metadata!
+      @files.each do |file|
+        upload_data = [file.metadata.runner_object]
+        response = RunnerClient::API.create_asset_items_for_upload(upload_data, @ingest_type)
+        if response.success?
+          Hotfolder.log "Success"
+        else
+          Hotfolder.log "Failure"
+        end
+      end
+    end
+
+    def consume!
+      upload!
     end
 
     private
