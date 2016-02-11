@@ -14,6 +14,7 @@ module Hotfolder
     attr_reader :files_per_batch
 
     attr_reader :metadata_class
+    attr_reader :ready_class
 
     def initialize
       load_config_hash
@@ -36,12 +37,6 @@ module Hotfolder
       UploadFilesCommand.execute(files_with_metadata, @ingest_type)
     end
 
-    def get_ready_files(new_files)
-      GetReadyFilesCommand.execute(new_files,
-                                   @file_pickup_delay_hours,
-                                   @files_per_batch)
-    end
-
     private
 
     def load_config_hash
@@ -59,6 +54,7 @@ module Hotfolder
         @runner_path_id          = hash[:runner_path_id]
         @files_per_batch         = hash[:files_per_batch]
         @metadata_class          = hash[:metadata_class_name].constantize
+        @ready_class             = hash[:ready_class_name].try(:constantize)
       end
     end
 
@@ -89,6 +85,11 @@ module Hotfolder
         file.build_metadata_using(@metadata_class)
         file
       end
+    end
+
+    def get_ready_files(new_files)
+      klass = @ready_class || GetReadyFilesCommand
+      klass.execute(new_files, @file_pickup_delay_hours, @files_per_batch)
     end
   end
 end
