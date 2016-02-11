@@ -1,4 +1,4 @@
-class ExampleMetadata < Hotfolder::Metadata
+class ExampleMetadata
   attr_accessor :slug
   attr_accessor :revision
   attr_accessor :gpms_ids
