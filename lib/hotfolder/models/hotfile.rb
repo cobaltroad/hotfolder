@@ -39,7 +39,7 @@ module Hotfolder
     end
 
     def build_metadata_using(klass)
-      Hotfolder.log "Building metadata using #{klass}"
+      Hotfolder.log "Building metadata for \"#{self.basename}\" using #{klass}"
       begin
         @metadata = klass.new(self)
       rescue ArgumentError

@@ -22,56 +22,20 @@ module Hotfolder
       validate
     end
 
-    def get_in_progress
-      GetInProgressCommand.execute(@ingest_type)
-    end
-
-    def get_files
-      GetFilesCommand.execute(
-        @aspera_endpoint,
-        @source_file_path,
-        @aspera_username,
-        @aspera_password
-      )
-    end
-
-    def get_new_files
-      in_progress_files = get_in_progress
-      get_files.select do |file|
-        !in_progress_files.include? file.basename
-      end
-    end
-
-    def get_ready_files
-      GetReadyFilesCommand.execute(
-        get_new_files,
-        @file_pickup_delay_hours,
-        @files_per_batch
-      )
-    end
-
-    def gather_metadata!
-      @files ||= get_ready_files.map do |file|
-        file.build_metadata_using(@metadata_class)
-        file
-      end
-    end
-
-    def upload!
-      gather_metadata!
-      @files.each do |file|
-        upload_data = [file.metadata.runner_object]
-        response = RunnerClient::API.create_asset_items_for_upload(upload_data, @ingest_type)
-        if response.success?
-          Hotfolder.log "Success"
-        else
-          Hotfolder.log "Failure"
-        end
-      end
-    end
-
     def consume!
-      upload!
+      in_progress_files = GetInProgressCommand.execute(@ingest_type)
+      all_files         = GetFilesCommand.execute(@aspera_endpoint,
+                                                  @source_file_path,
+                                                  @aspera_username,
+                                                  @aspera_password)
+
+      new_files   = get_new_files(in_progress_files, all_files)
+      ready_files = GetReadyFilesCommand.execute(new_files,
+                                                 @file_pickup_delay_hours,
+                                                 @files_per_batch)
+
+      files_with_metadata = gather_metadata!(ready_files)
+      UploadFilesCommand.execute(files_with_metadata, @ingest_type)
     end
 
     private
@@ -107,6 +71,19 @@ module Hotfolder
     def validate_runner_client_ingest_type
       unless Nummer::IngestType.values.include? @ingest_type
         raise "hotfolder_ingest_type is invalid"
+      end
+    end
+
+    def get_new_files(in_progress_files, folder_files)
+      folder_files.select do |file|
+        !in_progress_files.include? file.basename
+      end
+    end
+
+    def gather_metadata!(ready_files)
+      ready_files.map do |file|
+        file.build_metadata_using(@metadata_class)
+        file
       end
     end
   end

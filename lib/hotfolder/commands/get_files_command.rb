@@ -11,7 +11,7 @@ module Hotfolder
       raise 'Error retrieving hotfolder files' unless response.success?
       files = Hotfolder::Hotfile.build_from_response(response)
       unless files.blank?
-        Hotfolder.log "Hotfolder asset names: #{logged(files)}"
+        Hotfolder.log "Hotfolder assets: #{logged(files)}"
       end
       files
     end
