@@ -30,12 +30,16 @@ module Hotfolder
                                                   @aspera_password)
 
       new_files   = get_new_files(in_progress_files, all_files)
-      ready_files = GetReadyFilesCommand.execute(new_files,
-                                                 @file_pickup_delay_hours,
-                                                 @files_per_batch)
+      ready_files = get_ready_files(new_files)
 
       files_with_metadata = gather_metadata!(ready_files)
       UploadFilesCommand.execute(files_with_metadata, @ingest_type)
+    end
+
+    def get_ready_files(new_files)
+      GetReadyFilesCommand.execute(new_files,
+                                   @file_pickup_delay_hours,
+                                   @files_per_batch)
     end
 
     private
