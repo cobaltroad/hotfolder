@@ -40,7 +40,12 @@ module Hotfolder
 
     def build_metadata_using(klass)
       Hotfolder.log "Building metadata using #{klass}"
-      @metadata = klass.new(self)
+      begin
+        @metadata = klass.new(self)
+      rescue ArgumentError
+        msg = "#{klass.name}.initialize should accept an instance of Hotfile"
+        raise HotfolderError, msg
+      end
     end
 
     class << self

@@ -46,16 +46,60 @@ describe Hotfolder::Hotfile do
   end
 
   describe '.build_metadata_using' do
-    let(:test_class) { Class.new }
-    before do
-      test_class.send :define_method, :initialize, ->(does_nothing) {}
-    end
-
     subject { instance.build_metadata_using(test_class) }
 
-    specify {
-      subject
-      expect(instance.metadata).to be_a(test_class)
-    }
+    context 'test class inherits from Hotmetadata' do
+      let(:test_class) { Class.new(Hotfolder::Hotmetadata) }
+
+      context 'on_initialize defined' do
+        before do
+          test_class.send :define_method, :on_initialize, ->(does_nothing) {
+            @gpms_ids = ['foo']
+          }
+        end
+        specify { expect(subject.gpms_ids).to eq ['foo'] }
+      end
+
+      context 'on_initialize not defined' do
+        specify { expect(subject.gpms_ids).to eq nil }
+      end
+    end
+
+    context 'test class does not inherit from Hotmetadata' do
+      let(:test_class) { Class.new }
+
+      context 'initialize defined correctly' do
+        before do
+          test_class.send :define_method, :initialize, ->(does_nothing) {}
+          test_class.send :define_method, :runner_object, ->() {}
+        end
+
+        specify {
+          subject
+          expect(instance.metadata).to be_a(test_class)
+          expect(instance.metadata.respond_to?(:runner_object)).to be true
+        }
+      end
+
+      context 'initialize not defined correctly' do
+        before do
+          test_class.send :define_method, :initialize, ->() {}
+        end
+
+        specify {
+          expect {
+            subject
+          }.to raise_error(Hotfolder::HotfolderError)
+        }
+      end
+
+      context 'initialize not defined at all' do
+        specify {
+          expect {
+            subject
+          }.to raise_error(Hotfolder::HotfolderError)
+        }
+      end
+    end
   end
 end

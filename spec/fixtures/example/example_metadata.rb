@@ -1,4 +1,4 @@
-class ExampleMetadata
+class ExampleMetadata < Hotfolder::Hotmetadata
   attr_accessor :slug
   attr_accessor :revision
   attr_accessor :gpms_ids
@@ -17,7 +17,8 @@ class ExampleMetadata
     }
   }
 
-  def initialize(filename)
+  def on_initialize(file)
+    filename = file.basename
     series, show_number, rev, rev_number = filename_regex_match(filename)
 
     @slug           = "#{series}#{show_number}"

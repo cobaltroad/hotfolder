@@ -14,6 +14,7 @@ base_folder = File.dirname(__FILE__)
 
 [
   'commands',
+  'errors',
   'models',
 ].each do |subfolder|
   path = File.join(base_folder, 'hotfolder', subfolder, '**', '*.rb')
