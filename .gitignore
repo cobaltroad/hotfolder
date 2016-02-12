@@ -1,6 +1,6 @@
 /.bundle/
 /.yardoc
-/Gemfile.lock
+.DS_Store
 /_yardoc/
 /coverage/
 /doc/

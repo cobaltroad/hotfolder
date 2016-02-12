@@ -1,0 +1,101 @@
+GIT
+  remote: git@github.com:spedmg/nummer.git
+  revision: 409df5bf59dcdbd9726eea8fb8126c5691d63a0a
+  tag: 1.4.2
+  specs:
+    nummer (1.4.2)
+
+GIT
+  remote: git@github.com:spedmg/runner_client
+  revision: 6c5fa58a7fd12f7f2f47ee21f6fec0056ce7718e
+  tag: 3.4.2
+  specs:
+    runner_client (3.4.2)
+      active_model_serializers
+      activesupport
+      httparty (~> 0.13.0)
+      syck
+
+PATH
+  remote: .
+  specs:
+    hotfolder (0.0.1)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    active_model_serializers (0.9.4)
+      activemodel (>= 3.2)
+    activemodel (4.2.5.1)
+      activesupport (= 4.2.5.1)
+      builder (~> 3.1)
+    activesupport (4.2.5.1)
+      i18n (~> 0.7)
+      json (~> 1.7, >= 1.7.7)
+      minitest (~> 5.1)
+      thread_safe (~> 0.3, >= 0.3.4)
+      tzinfo (~> 1.1)
+    addressable (2.4.0)
+    builder (3.2.2)
+    coderay (1.1.0)
+    crack (0.4.3)
+      safe_yaml (~> 1.0.0)
+    diff-lcs (1.2.5)
+    dotenv (2.1.0)
+    hashdiff (0.2.3)
+    httparty (0.13.7)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
+    i18n (0.7.0)
+    json (1.8.3)
+    method_source (0.8.2)
+    minitest (5.8.4)
+    multi_xml (0.5.5)
+    pry (0.10.3)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
+    rake (10.5.0)
+    rspec (3.4.0)
+      rspec-core (~> 3.4.0)
+      rspec-expectations (~> 3.4.0)
+      rspec-mocks (~> 3.4.0)
+    rspec-core (3.4.2)
+      rspec-support (~> 3.4.0)
+    rspec-expectations (3.4.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.4.0)
+    rspec-mocks (3.4.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.4.0)
+    rspec-support (3.4.1)
+    safe_yaml (1.0.4)
+    slop (3.6.0)
+    syck (1.0.5)
+    thread_safe (0.3.5)
+    tzinfo (1.2.2)
+      thread_safe (~> 0.1)
+    vcr (3.0.1)
+    webmock (1.22.6)
+      addressable (>= 2.3.6)
+      crack (>= 0.3.2)
+      hashdiff
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler (~> 1.10)
+  dotenv
+  hotfolder!
+  httparty
+  nummer!
+  pry
+  rake (~> 10.0)
+  rspec
+  runner_client!
+  vcr
+  webmock
+
+BUNDLED WITH
+   1.11.2
