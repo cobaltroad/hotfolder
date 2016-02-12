@@ -11,7 +11,7 @@ module Hotfolder
       raise 'Error retrieving hotfolder files' unless response.success?
       files = Hotfolder::Hotfile.build_from_response(response)
       unless files.blank?
-        Hotfolder.log "Hotfolder assets: #{logged(files)}"
+        Hotfolder.log "Hotfolder files in #{path}: #{logged(files)}"
       end
       files
     end
@@ -46,11 +46,8 @@ module Hotfolder
 
     def logged(array)
       array.map do |obj|
-        {
-          name: obj.basename,
-          mtime: obj.mtime
-        }
-      end
+        "#{obj.basename} #{obj.mtime}"
+      end.join(' --- ')
     end
   end
 end
