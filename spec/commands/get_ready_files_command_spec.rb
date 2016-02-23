@@ -13,10 +13,10 @@ describe Hotfolder::GetReadyFilesCommand do
     end
     let(:response) { double('HTTP response', body: body) }
     let(:new_files) { Hotfolder::Hotfile.build_from_response(response) }
-    let(:delay_hours) { 24 }
+    let(:delay_seconds) { 86400 }
     let(:limit) { 10 }
 
-    let(:subject) { described_class.execute(new_files, delay_hours, limit) }
+    let(:subject) { described_class.execute(new_files, delay_seconds, limit) }
 
     context 'too soon for some files' do
       let(:now) { Time.parse('2016-02-09T23:00:00Z').to_i }

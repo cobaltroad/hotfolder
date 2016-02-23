@@ -32,9 +32,8 @@ module Hotfolder
       Time.now.to_i
     end
 
-    def ready?(delay_in_hours)
-      seconds_in_an_hour = 3600
-      delayed_time = now - (seconds_in_an_hour * delay_in_hours)
+    def ready?(delay_in_seconds)
+      delayed_time = now - delay_in_seconds
       @mtime.to_i < delayed_time
     end
 

@@ -51,11 +51,90 @@ describe Hotfolder do
       path = File.join(root, "fixtures/example/example.yml")
       YAML.load_file(path)["test"]
     end
-    let(:test_instance) { Example.config(config).new }
-    subject { test_instance.name }
+    subject { Example.config(config).new }
 
     it 'reads the config file from a default location' do
-      expect(subject).to eq 'Example Config'
+      expect(subject.name).to eq 'Example Config'
+    end
+
+    context 'file pickup delay' do
+      let(:config) do
+        {
+          name: "File Pickup Config",
+          class_name: "Example",
+          metadata_class_name: "ExampleMetadata"
+        }
+      end
+
+      context 'only hours is present' do
+        before do
+          config.merge!(file_pickup_delay_hours: 1)
+        end
+
+        it 'parses the delay into seconds' do
+          expect(subject.file_pickup_delay).to eq 3600
+        end
+      end
+
+      context 'hours and minutes' do
+        before do
+          config.merge!(
+            file_pickup_delay_hours: 1,
+            file_pickup_delay_minutes: 30
+          )
+        end
+
+        it 'uses the maximum delay' do
+          expect(subject.file_pickup_delay).to eq 3600
+        end
+      end
+
+      context 'hours and minutes and seconds' do
+        before do
+          config.merge!(
+            file_pickup_delay_hours: 1,
+            file_pickup_delay_minutes: 30,
+            file_pickup_delay_seconds: 600
+          )
+        end
+
+        it 'uses the maximum delay' do
+          expect(subject.file_pickup_delay).to eq 3600
+        end
+      end
+
+      context 'only minutes' do
+        before do
+          config.merge!(file_pickup_delay_minutes: 60)
+        end
+
+        it 'parses the delay into seconds' do
+          expect(subject.file_pickup_delay).to eq 3600
+        end
+      end
+
+      context 'minutes and seconds' do
+        before do
+          config.merge!(
+            file_pickup_delay_minutes: 60,
+            file_pickup_delay_seconds: 600
+          )
+        end
+
+        it 'uses the maximum delay' do
+          expect(subject.file_pickup_delay).to eq 3600
+        end
+      end
+
+      context 'only seconds' do
+        before do
+          config.merge!(file_pickup_delay_seconds: 60)
+        end
+
+        it 'parses the delay into seconds' do
+          expect(subject.file_pickup_delay).to eq 60
+        end
+      end
     end
   end
 end

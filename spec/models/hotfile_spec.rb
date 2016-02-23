@@ -30,7 +30,7 @@ describe Hotfolder::Hotfile do
         .to receive(:now)
         .and_return now
     end
-    subject { instance.ready?(24) }
+    subject { instance.ready?(86400) }
 
     context 'newer' do
       let(:now) { Time.parse('2016-01-01T14:00:00Z').to_i }
