@@ -8,7 +8,7 @@ module Hotfolder
     attr_reader :aspera_endpoint
     attr_reader :source_file_path
 
-    attr_reader :file_pickup_delay_hours
+    attr_reader :file_pickup_delay
     attr_reader :ingest_type
     attr_reader :runner_path_id
     attr_reader :files_per_batch
@@ -50,7 +50,7 @@ module Hotfolder
         @aspera_endpoint         = hash[:aspera_endpoint]
         @source_file_path        = hash[:source_file_path]
 
-        @file_pickup_delay_hours = hash[:file_pickup_delay_hours]
+        @file_pickup_delay       = maximum_delay_time(hash)
         @runner_path_id          = hash[:runner_path_id]
         @files_per_batch         = hash[:files_per_batch]
         @metadata_class          = hash[:metadata_class_name].constantize
@@ -62,6 +62,14 @@ module Hotfolder
       @ingest_type = class_var(:@@ingest_type) do
         raise "hotfolder_ingest_type is not set"
       end
+    end
+
+    def maximum_delay_time(hash)
+      [
+        hash[:file_pickup_delay_seconds].to_i,
+        hash[:file_pickup_delay_minutes].to_i * 60,
+        hash[:file_pickup_delay_hours].to_i * 3600
+      ].max
     end
 
     def validate
@@ -89,7 +97,7 @@ module Hotfolder
 
     def get_ready_files(new_files)
       klass = @ready_class || GetReadyFilesCommand
-      klass.execute(new_files, @file_pickup_delay_hours, @files_per_batch)
+      klass.execute(new_files, @file_pickup_delay, @files_per_batch)
     end
   end
 end
