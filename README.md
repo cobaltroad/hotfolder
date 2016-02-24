@@ -54,13 +54,13 @@ The mixin line `include Hotfolder` is what provides the class methods above as w
 
 * `source_file_path`
 
-* `file_pickup_delay_hours`
+* `file_pickup_delay_hours`, `file_pickup_delay_minutes`, `file_pickup_delay_seconds`
 
 * `runner_path_id`
 
 * `files_per_batch`
 
-* `metadata_class` See section below.
+* `metadata_config` See section below.
 
 * `ready_class` (OPTIONAL) See section below.
 
@@ -73,37 +73,18 @@ The ingest type must be a valid value in `Nummer::IngestType`
 
 * `hotfolder_logger` This configures the logging mechanism for the class.
 
-### Metadata Class
+### Metadata Config
 
-The metadata class key allows the system to use common hotfolder infrastructure (as denoted by the ingest type) but use a different method of retrieving metadata.
-There are two approaches to writing this class.
+The metadata config key allows the system to use common hotfolder infrastructure (as denoted by the ingest type) but use a different method of retrieving metadata.
+An instance of a metadata class is created, passing in the config hash as options.
+There are two approaches to writing this block.
 
-One way is to simply write a class whose `initialize` accepts an instance of `Hotfolder::Hotfile` and sets `@gpms_ids`, `@name`, and `@folder_ids`.
-The class also has to define a `runner_object` method.
-
-Here is an example of the first approach:
-
-    class BasicMetadata
-      attr_accessor :source_folder
-
-      def initialize(file)
-        @name = file.basename
-        @source_folder = file.path.split('/').last
-      end
-
-      def runner_object
-        {
-          name: @name,
-          folder_ids: [14285]
-        }
-      end
-    end
+One is to omit the `class_name` key which tells the system to use the default class `Hotfolder::Hotmetadata`.
+This allows the config file to pass values `gpms_ids` and `folder_ids`.
 
 The other way is to use the base `Hotfolder::Hotmetadata` class as a parent.
-The only responsibility for the child class is to define an `on_initialize(file)` that takes an instance of `Hotfolder::Hotfile` as a parameter.
-Because the `runner_object` is already defined in the parent, the child class just has to set the instance variables `@gpms_ids` and `@folder_ids`.
-As this gem matures, more base functionality might be packed into this base class, which makes this method a bit more future-proof.
-That's the trade-off between this and the first method.
+The only responsibility for the child class is to define an `on_initialize(file, options={})` that takes an instance of `Hotfolder::Hotfile` as a parameter
+and optionally the rest of the metadata configuration block as well.
 
 Here is an example of this second approach:
 
@@ -111,7 +92,7 @@ Here is an example of this second approach:
       attr_accessor :slug
       attr_accessor :revision
 
-      def on_initialize(file)
+      def on_initialize(file, config={})
         filename = file.basename
         series, show_number, rev, rev_number = filename_regex_match(filename)
 

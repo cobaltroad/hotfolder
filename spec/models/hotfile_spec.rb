@@ -46,59 +46,50 @@ describe Hotfolder::Hotfile do
   end
 
   describe '.build_metadata_using' do
-    subject { instance.build_metadata_using(test_class) }
+    subject { instance.build_metadata_using(test_class_config) }
 
-    context 'test class inherits from Hotmetadata' do
-      let(:test_class) { Class.new(Hotfolder::Hotmetadata) }
-
-      context 'on_initialize defined' do
-        before do
-          test_class.send :define_method, :on_initialize, ->(does_nothing) {
-            @gpms_ids = ['foo']
-          }
-        end
-        specify { expect(subject.gpms_ids).to eq ['foo'] }
+    context 'metadatda class name is not specified' do
+      let(:test_class_config) do
+        {
+          folder_ids: [123]
+        }
       end
 
-      context 'on_initialize not defined' do
-        specify { expect(subject.gpms_ids).to eq nil }
-      end
+      specify { expect(subject).to be_a(Hotfolder::Hotmetadata) }
+      specify { expect(subject.folder_ids).to eq [123] }
     end
 
-    context 'test class does not inherit from Hotmetadata' do
-      let(:test_class) { Class.new }
-
-      context 'initialize defined correctly' do
-        before do
-          test_class.send :define_method, :initialize, ->(does_nothing) {}
-          test_class.send :define_method, :runner_object, ->() {}
-        end
-
-        specify {
-          subject
-          expect(instance.metadata).to be_a(test_class)
-          expect(instance.metadata.respond_to?(:runner_object)).to be true
+    context 'metadata class name inherits from hotmetadata' do
+      let(:test_class_config) do
+        {
+          class_name: test_class.name,
+          folder_ids: [456]
         }
       end
 
-      context 'initialize not defined correctly' do
+      context 'on_initialize defined' do
+        let(:test_class) { TestClass1 = Class.new(Hotfolder::Hotmetadata) }
         before do
-          test_class.send :define_method, :initialize, ->() {}
+          test_class.send :define_method, :on_initialize, ->(file, config) {
+            @gpms_ids   = ['foo']
+          }
         end
 
-        specify {
-          expect {
-            subject
-          }.to raise_error(Hotfolder::HotfolderError)
-        }
+        it 'relies on the defined method' do
+          expect(subject).to be_a(TestClass1)
+          expect(subject.gpms_ids).to eq ['foo']
+          expect(subject.folder_ids).to eq nil
+        end
       end
 
-      context 'initialize not defined at all' do
-        specify {
-          expect {
-            subject
-          }.to raise_error(Hotfolder::HotfolderError)
-        }
+      context 'on initialize not defined' do
+        let(:test_class) { TestClass2 = Class.new(Hotfolder::Hotmetadata) }
+
+        it 'relies on the passed config' do
+          expect(subject).to be_a(TestClass2)
+          expect(subject.gpms_ids).to eq nil
+          expect(subject.folder_ids).to eq [456]
+        end
       end
     end
   end

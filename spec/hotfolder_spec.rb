@@ -61,8 +61,7 @@ describe Hotfolder do
       let(:config) do
         {
           name: "File Pickup Config",
-          class_name: "Example",
-          metadata_class_name: "ExampleMetadata"
+          class_name: "Example"
         }
       end
 

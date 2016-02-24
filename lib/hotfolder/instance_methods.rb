@@ -13,7 +13,7 @@ module Hotfolder
     attr_reader :runner_path_id
     attr_reader :files_per_batch
 
-    attr_reader :metadata_class
+    attr_reader :metadata_config
     attr_reader :ready_class
 
     def initialize
@@ -53,7 +53,8 @@ module Hotfolder
         @file_pickup_delay       = maximum_delay_time(hash)
         @runner_path_id          = hash[:runner_path_id]
         @files_per_batch         = hash[:files_per_batch]
-        @metadata_class          = hash[:metadata_class_name].constantize
+
+        @metadata_config         = hash[:metadata_config]
         @ready_class             = hash[:ready_class_name].try(:constantize)
       end
     end
@@ -90,7 +91,7 @@ module Hotfolder
 
     def gather_metadata!(ready_files)
       ready_files.map do |file|
-        file.build_metadata_using(@metadata_class)
+        file.build_metadata_using(@metadata_config)
         file
       end
     end

@@ -37,9 +37,14 @@ module Hotfolder
       @mtime.to_i < delayed_time
     end
 
-    def build_metadata_using(klass)
+    def build_metadata_using(metadata_config)
       begin
-        @metadata = klass.new(self)
+        if metadata_config[:class_name]
+          klass = metadata_config.delete(:class_name).constantize
+        else
+          klass = Hotfolder::Hotmetadata
+        end
+        @metadata = klass.new(self, metadata_config)
       rescue ArgumentError
         msg = "#{klass.name}.initialize should accept an instance of Hotfile"
         raise HotfolderError, msg

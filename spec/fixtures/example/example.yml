@@ -8,7 +8,9 @@ default: &default
   file_pickup_delay_hours: 240
   files_per_batch: 2
   class_name: Example
-  metadata_class_name: ExampleMetadata
+  metadata_config:
+    folder_ids:
+      - 14285
 development:
   <<: *default
 test:

@@ -17,7 +17,7 @@ class ExampleMetadata < Hotfolder::Hotmetadata
     }
   }
 
-  def on_initialize(file)
+  def on_initialize(file, options={})
     filename = file.basename
     series, show_number, rev, rev_number = filename_regex_match(filename)
 
