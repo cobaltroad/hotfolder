@@ -1,13 +1,9 @@
 module Hotfolder
-  module GetFilesCommand
+  module GetFilesFromAsperaCommand
     extend self
 
     def execute(endpoint, path, username, password)
-      response = HTTParty.post(browse_endpoint(endpoint),
-                headers: headers,
-                body: browse_body(path),
-                basic_auth: basic_auth(username, password),
-                verify: false)
+      response = AsperaClient::API.get_files(endpoint, basic_auth(username, password), path)
       raise 'Error retrieving hotfolder files' unless response.success?
       files = Hotfolder::Hotfile.build_from_response(response)
       unless files.blank?
@@ -17,25 +13,6 @@ module Hotfolder
     end
 
     private
-
-    def browse_endpoint(endpoint)
-      "#{endpoint}/files/browse"
-    end
-
-    def headers
-      {
-        'Content-Type' => 'application/json',
-        'Accept' => 'application/json'
-      }
-    end
-
-    def browse_body(path)
-      {
-        'path' => path,
-        'sort' => 'mtime_d',
-        'filters' => {}
-      }.to_json
-    end
 
     def basic_auth(username, password)
       {
