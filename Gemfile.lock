@@ -1,4 +1,13 @@
 GIT
+  remote: git@github.com:spedmg/aspera_client
+  revision: ac46bde5dda3832af13645331d350de37b741e64
+  tag: 0.2.0
+  specs:
+    aspera_client (0.2.0)
+      httparty (~> 0.13.0)
+      savon
+
+GIT
   remote: git@github.com:spedmg/nummer.git
   revision: 409df5bf59dcdbd9726eea8fb8126c5691d63a0a
   tag: 1.4.2
@@ -19,7 +28,7 @@ GIT
 PATH
   remote: .
   specs:
-    hotfolder (0.1.1)
+    hotfolder (0.2.0)
 
 GEM
   remote: https://rubygems.org/
@@ -36,25 +45,37 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     addressable (2.4.0)
+    akami (1.3.1)
+      gyoku (>= 0.4.0)
+      nokogiri
     builder (3.2.2)
     coderay (1.1.0)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     diff-lcs (1.2.5)
     dotenv (2.1.0)
+    gyoku (1.3.1)
+      builder (>= 2.1.2)
     hashdiff (0.2.3)
     httparty (0.13.7)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
+    httpi (2.4.1)
+      rack
     i18n (0.7.0)
     json (1.8.3)
     method_source (0.8.2)
+    mini_portile2 (2.0.0)
     minitest (5.8.4)
     multi_xml (0.5.5)
+    nokogiri (1.6.7.2)
+      mini_portile2 (~> 2.0.0.rc2)
+    nori (2.6.0)
     pry (0.10.3)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    rack (1.6.4)
     rake (10.5.0)
     rspec (3.4.0)
       rspec-core (~> 3.4.0)
@@ -70,12 +91,23 @@ GEM
       rspec-support (~> 3.4.0)
     rspec-support (3.4.1)
     safe_yaml (1.0.4)
+    savon (2.11.1)
+      akami (~> 1.2)
+      builder (>= 2.1.2)
+      gyoku (~> 1.2)
+      httpi (~> 2.3)
+      nokogiri (>= 1.4.0)
+      nori (~> 2.4)
+      wasabi (~> 3.4)
     slop (3.6.0)
     syck (1.0.5)
     thread_safe (0.3.5)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     vcr (3.0.1)
+    wasabi (3.5.0)
+      httpi (~> 2.0)
+      nokogiri (>= 1.4.2)
     webmock (1.22.6)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
@@ -85,6 +117,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  aspera_client!
   bundler (~> 1.10)
   dotenv
   hotfolder!

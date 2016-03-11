@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Hotfolder::GetFilesCommand do
+describe Hotfolder::GetFilesFromAsperaCommand do
   describe '.execute' do
     before do
       allow(HTTParty)

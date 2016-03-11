@@ -1,14 +1,15 @@
-require "dotenv"
-file = File.join("config","dotenv",".env.test")
+require 'dotenv'
+file = File.join('config','dotenv','.env.test')
 Dotenv.load(file)
 
-require "nummer"
-require "runner_client"
-require "httparty"
+require 'nummer'
+require 'runner_client'
+require 'httparty'
+require 'aspera_client'
 
-require_relative "hotfolder/class_methods"
-require_relative "hotfolder/instance_helpers"
-require_relative "hotfolder/instance_methods"
+require_relative 'hotfolder/class_methods'
+require_relative 'hotfolder/instance_helpers'
+require_relative 'hotfolder/instance_methods'
 
 base_folder = File.dirname(__FILE__)
 
