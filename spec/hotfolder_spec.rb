@@ -41,6 +41,36 @@ describe Hotfolder do
     end
   end
 
+  context 'calls appropriate methods' do
+    let(:test_class) { Class.new }
+    before do
+      test_class.send :include, Hotfolder
+      test_class.send :hotfolder_ingest_type, "runner"
+      test_class.send :define_method, :upload_files, ->() do
+        Array.new
+        super()
+      end
+
+      allow(Array).to receive(:new)
+      allow(Hotfolder::UploadFilesCommand).to receive(:execute)
+      allow(Hotfolder::GetInProgressCommand)
+        .to receive(:execute)
+        .and_return([])
+      allow(Hotfolder::GetFilesFromAsperaCommand)
+        .to receive(:execute)
+        .and_return([])
+    end
+    let(:test_instance) { test_class.new }
+
+    it 'executes the appropriate commands' do
+      test_instance.consume!
+      expect(Hotfolder::GetInProgressCommand).to have_received(:execute)
+      expect(Hotfolder::GetFilesFromAsperaCommand).to have_received(:execute)
+      expect(Array).to have_received(:new)
+      expect(Hotfolder::UploadFilesCommand).to have_received(:execute)
+    end
+  end
+
   context 'loads a config file' do
     before do
       require_relative 'fixtures/example/example'

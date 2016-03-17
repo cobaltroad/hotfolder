@@ -16,6 +16,9 @@ module Hotfolder
     attr_reader :metadata_config
     attr_reader :ready_class
 
+    attr_reader :new_files
+    attr_reader :files_with_metadata
+
     def initialize
       load_config_hash
       load_ingest_type
@@ -25,16 +28,20 @@ module Hotfolder
 
     def consume!
       in_progress_files = GetInProgressCommand.execute(@ingest_type)
-      all_files         = GetFilesCommand.execute(@aspera_endpoint,
+      all_files         = GetFilesFromAsperaCommand.execute(@aspera_endpoint,
                                                   @source_file_path,
                                                   @aspera_username,
                                                   @aspera_password)
 
-      new_files   = get_new_files(in_progress_files, all_files)
+      @new_files  = get_new_files(in_progress_files, all_files)
       ready_files = get_ready_files(new_files)
+      @files_with_metadata = gather_metadata!(ready_files)
 
-      files_with_metadata = gather_metadata!(ready_files)
-      UploadFilesCommand.execute(files_with_metadata, @ingest_type)
+      upload_files
+    end
+
+    def upload_files
+      UploadFilesCommand.execute(@files_with_metadata, @ingest_type)
     end
 
     private

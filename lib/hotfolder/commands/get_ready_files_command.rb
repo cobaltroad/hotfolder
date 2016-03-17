@@ -7,7 +7,7 @@ module Hotfolder
         hotfile.ready? delay_in_seconds
       end
       Hotfolder.log "Ready files: #{ready.map(&:basename)}"
-      ready.first(limit)
+      ready.first(limit || 1)
     end
   end
 end
