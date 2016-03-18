@@ -67,6 +67,15 @@ describe Hotfolder::Hotfile do
         }
       end
 
+      context 'multiple files ingested at once' do
+        let(:test_class) { TestClassMultiple = Class.new(Hotfolder::Hotmetadata) }
+        let(:first) { instance.build_metadata_using(test_class_config) }
+
+        it 'maintains the metadata class for both instances' do
+          expect(first).to be_a(TestClassMultiple)
+          expect(subject).to be_a(TestClassMultiple)
+        end
+      end
       context 'on_initialize defined' do
         let(:test_class) { TestClass1 = Class.new(Hotfolder::Hotmetadata) }
         before do

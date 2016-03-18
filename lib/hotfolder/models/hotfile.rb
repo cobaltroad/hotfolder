@@ -38,13 +38,14 @@ module Hotfolder
     end
 
     def build_metadata_using(metadata_config)
+      metadata_dup = metadata_config.dup
       begin
-        if metadata_config[:class_name]
-          klass = metadata_config.delete(:class_name).constantize
+        if metadata_dup[:class_name]
+          klass = metadata_dup.delete(:class_name).constantize
         else
           klass = Hotfolder::Hotmetadata
         end
-        @metadata = klass.new(self, metadata_config)
+        @metadata = klass.new(self, metadata_dup)
       rescue ArgumentError
         msg = "#{klass.name}.initialize should accept an instance of Hotfile"
         raise HotfolderError, msg
