@@ -2,12 +2,12 @@ module Hotfolder
   module GetReadyFilesCommand
     extend self
 
-    def execute(new_hotfiles, delay_in_seconds, limit)
+    def execute(new_hotfiles, delay_in_seconds)
       ready = new_hotfiles.select do |hotfile|
         hotfile.ready? delay_in_seconds
       end
       Hotfolder.log "Ready files: #{ready.map(&:basename)}"
-      ready.first(limit || 1)
+      ready
     end
   end
 end

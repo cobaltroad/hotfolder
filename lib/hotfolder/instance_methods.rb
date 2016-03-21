@@ -41,6 +41,7 @@ module Hotfolder
     end
 
     def upload_files
+      batch = @files_with_metadata.first(@files_per_batch || 1)
       UploadFilesCommand.execute(@files_with_metadata, @ingest_type)
     end
 
@@ -105,7 +106,7 @@ module Hotfolder
 
     def get_ready_files(new_files)
       klass = @ready_class || GetReadyFilesCommand
-      klass.execute(new_files, @file_pickup_delay, @files_per_batch)
+      klass.execute(new_files, @file_pickup_delay)
     end
   end
 end

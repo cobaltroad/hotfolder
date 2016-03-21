@@ -14,9 +14,8 @@ describe Hotfolder::GetReadyFilesCommand do
     let(:response) { double('HTTP response', body: body) }
     let(:new_files) { Hotfolder::Hotfile.build_from_response(response) }
     let(:delay_seconds) { 86400 }
-    let(:limit) { 10 }
 
-    let(:subject) { described_class.execute(new_files, delay_seconds, limit) }
+    let(:subject) { described_class.execute(new_files, delay_seconds) }
 
     context 'too soon for some files' do
       let(:now) { Time.parse('2016-02-09T23:00:00Z').to_i }
@@ -28,12 +27,6 @@ describe Hotfolder::GetReadyFilesCommand do
       let(:now) { Time.parse('2016-02-11T23:00:00Z').to_i }
 
       specify { expect(subject.length).to eq 8 }
-
-      context 'limit is less than all files' do
-        let(:limit) { 5 }
-
-        specify { expect(subject.length).to eq limit }
-      end
     end
   end
 end
