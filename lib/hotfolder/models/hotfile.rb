@@ -5,11 +5,14 @@ module Hotfolder
     attr_accessor :size
     attr_accessor :mtime
     attr_accessor :metadata
+    attr_reader :username
 
-    def initialize(hash)
+    def initialize(hash, username)
       @path     = hash['path']
       @basename = hash['basename']
       @size     = hash['size']
+
+      @username = username
       @mtime    = Time.parse(hash['mtime'])
       @metadata = nil
     end
@@ -53,11 +56,11 @@ module Hotfolder
     end
 
     class << self
-      def build_from_response(response)
+      def build_from_response(response, username)
         items = JSON.parse(response.body)['items']
         if items
           items.map do |hash|
-            Hotfolder::Hotfile.new(hash)
+            Hotfolder::Hotfile.new(hash, username)
           end
         end
       end

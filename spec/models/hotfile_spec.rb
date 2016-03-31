@@ -10,7 +10,8 @@ describe Hotfolder::Hotfile do
       'mtime'    => '2016-01-01T13:14:15Z'
     }
   end
-  let(:instance) { described_class.new hash }
+  let(:username) { 'goku' }
+  let(:instance) { described_class.new(hash, username) }
 
   describe '.new' do
     subject { instance }
@@ -21,6 +22,7 @@ describe Hotfolder::Hotfile do
       expect(subject.size).to     eq '123456'
       expect(subject.mtime).to    eq Time.parse('2016-01-01T13:14:15Z')
       expect(subject.metadata).to eq nil
+      expect(subject.username).to eq 'goku'
     }
   end
 
