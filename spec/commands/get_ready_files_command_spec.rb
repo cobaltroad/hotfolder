@@ -12,7 +12,8 @@ describe Hotfolder::GetReadyFilesCommand do
       hash.to_json
     end
     let(:response) { double('HTTP response', body: body) }
-    let(:new_files) { Hotfolder::Hotfile.build_from_response(response) }
+    let(:username) { 'goku' }
+    let(:new_files) { Hotfolder::Hotfile.build_from_response(response, username) }
     let(:delay_seconds) { 86400 }
 
     let(:subject) { described_class.execute(new_files, delay_seconds) }
