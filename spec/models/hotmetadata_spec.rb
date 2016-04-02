@@ -18,9 +18,9 @@ describe Hotfolder::Hotmetadata do
 
       specify do
         expect(subject[:custom_metadata_fields]).to eq([{
-          category: 'hotfolder_source_path',
+          category: 'migration_info',
           label: 'file_path',
-          value: path,
+          value: 'bar',
         }])
       end
 
@@ -30,14 +30,14 @@ describe Hotfolder::Hotmetadata do
         specify do
           expect(subject[:custom_metadata_fields]).to eq([
             {
-              category: 'hotfolder_source_path',
+              category: 'migration_info',
               label: 'file_path',
               value: 'bar'
             },
             {
-              category: 'hotfolder_account_key',
+              category: 'migration_info',
               label: 'account_key',
-              value: username,
+              value: 'foo',
             }
           ])
         end

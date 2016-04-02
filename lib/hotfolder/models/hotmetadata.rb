@@ -37,7 +37,7 @@ module Hotfolder
 
     def create_account_key_custom_metadata
       custom_metadata_fields << {
-        category: 'hotfolder_account_key',
+        category: 'migration_info',
         label: 'account_key',
         value: @username
       }
@@ -45,7 +45,7 @@ module Hotfolder
 
     def create_source_path_custom_metadata
       custom_metadata_fields << {
-        category: 'hotfolder_source_path',
+        category: 'migration_info',
         label: 'file_path',
         value: @path
       }
