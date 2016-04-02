@@ -42,7 +42,7 @@ module Hotfolder
 
     def upload_files
       batch = @files_with_metadata.first(@files_per_batch || 1)
-      UploadFilesCommand.execute(@files_with_metadata, @ingest_type)
+      UploadFilesCommand.execute(batch, @ingest_type)
     end
 
     private
