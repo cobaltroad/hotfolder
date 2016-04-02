@@ -16,11 +16,11 @@ GIT
 
 GIT
   remote: git@github.com:spedmg/runner_client
-  revision: 6c5fa58a7fd12f7f2f47ee21f6fec0056ce7718e
-  tag: 3.4.2
+  revision: 719ddd37f106053720d6a36535def95518e14d17
+  tag: 3.7.0
   specs:
-    runner_client (3.4.2)
-      active_model_serializers
+    runner_client (3.7.0)
+      active_model_serializers (= 0.9.4)
       activesupport
       httparty (~> 0.13.0)
       syck
@@ -28,17 +28,17 @@ GIT
 PATH
   remote: .
   specs:
-    hotfolder (0.2.3)
+    hotfolder (0.2.4)
 
 GEM
   remote: https://rubygems.org/
   specs:
     active_model_serializers (0.9.4)
       activemodel (>= 3.2)
-    activemodel (4.2.5.1)
-      activesupport (= 4.2.5.1)
+    activemodel (4.2.6)
+      activesupport (= 4.2.6)
       builder (~> 3.1)
-    activesupport (4.2.5.1)
+    activesupport (4.2.6)
       i18n (~> 0.7)
       json (~> 1.7, >= 1.7.7)
       minitest (~> 5.1)
@@ -100,7 +100,7 @@ GEM
       nori (~> 2.4)
       wasabi (~> 3.4)
     slop (3.6.0)
-    syck (1.0.5)
+    syck (1.1.0)
     thread_safe (0.3.5)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)

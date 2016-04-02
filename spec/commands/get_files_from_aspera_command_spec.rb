@@ -14,7 +14,12 @@ describe Hotfolder::GetFilesFromAsperaCommand do
     end
     let(:fixture) { nil }
 
-    subject { described_class.execute('fee', 'fi', 'fo', 'fum') }
+    let(:endpoint) { 'fee' }
+    let(:path)     { 'fi' }
+    let(:username) { 'fo' }
+    let(:password) { 'fum' }
+
+    subject { described_class.execute(endpoint, path, username, password) }
 
     context 'returns items' do
       let(:fixture) { 'list_items.yml' }
@@ -23,6 +28,7 @@ describe Hotfolder::GetFilesFromAsperaCommand do
         expect(subject).to be_an(Array)
         expect(subject.first).to be_a(Hotfolder::Hotfile)
         expect(subject.first.basename).to eq 'JEOP5222.mxf'
+        expect(subject.first.username).to eq 'fo'
       }
     end
 
