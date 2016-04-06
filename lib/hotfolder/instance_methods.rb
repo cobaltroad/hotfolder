@@ -41,8 +41,17 @@ module Hotfolder
     end
 
     def upload_files
-      batch = @files_with_metadata.first(@files_per_batch || 1)
-      UploadFilesCommand.execute(batch, @ingest_type)
+      files_per_batch = @files_per_batch || 1
+      num_batches = @files_with_metadata.size / files_per_batch
+
+      if ((@files_with_metadata.size % files_per_batch) != 0)
+        num_batches += 1
+      end
+
+      num_batches.times do
+        batch = @files_with_metadata.slice!(0,files_per_batch)
+        UploadFilesCommand.execute(batch, @ingest_type)
+      end
     end
 
     private
