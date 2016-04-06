@@ -43,6 +43,29 @@ describe Hotfolder do
 
   context 'calls appropriate methods' do
     let(:test_class) { Class.new }
+    let(:hotfile_hash) {{
+      'path'     => 'path',
+      'basename' => 'basename',
+      'size'     => '123456',
+      'mtime'    => '2016-01-01T13:14:15Z'
+    }}
+    let(:username) { 'foo' }
+    let(:hotfile1)   { Hotfolder::Hotfile.new(hotfile_hash, username) }
+    let(:hotfile2)   { Hotfolder::Hotfile.new(hotfile_hash, username) }
+    let(:hotfile3)   { Hotfolder::Hotfile.new(hotfile_hash, username) }
+    let(:hotfile4)   { Hotfolder::Hotfile.new(hotfile_hash, username) }
+    let(:hotfiles)   {[
+      hotfile1,
+      hotfile2,
+      hotfile3,
+      hotfile4,
+    ]}
+
+    def stub_hotfile_methods_for(hotfile)
+      allow(hotfile).to receive(:ready?).and_return true
+      allow(hotfile).to receive(:build_metadata_using)
+    end
+
     before do
       test_class.send :include, Hotfolder
       test_class.send :hotfolder_ingest_type, "runner"
@@ -58,7 +81,10 @@ describe Hotfolder do
         .and_return([])
       allow(Hotfolder::GetFilesFromAsperaCommand)
         .to receive(:execute)
-        .and_return([])
+        .and_return(hotfiles)
+      hotfiles.each do |hf|
+        stub_hotfile_methods_for(hf)
+      end
     end
     let(:test_instance) { test_class.new }
 
@@ -67,7 +93,7 @@ describe Hotfolder do
       expect(Hotfolder::GetInProgressCommand).to have_received(:execute)
       expect(Hotfolder::GetFilesFromAsperaCommand).to have_received(:execute)
       expect(Array).to have_received(:new)
-      expect(Hotfolder::UploadFilesCommand).to have_received(:execute)
+      expect(Hotfolder::UploadFilesCommand).to have_received(:execute).exactly(4).times
     end
   end
 
