@@ -107,10 +107,16 @@ module Hotfolder
     end
 
     def gather_metadata!(ready_files)
-      ready_files.map do |file|
-        file.build_metadata_using(@metadata_config)
-        file
+      mapped = ready_files.map do |file|
+        begin
+          file.build_metadata_using(@metadata_config)
+          file
+        rescue Exception => e
+          Hotfolder.log "ERROR BUILDING METADATA #{e}"
+          nil
+        end
       end
+      mapped.compact
     end
 
     def get_ready_files(new_files)

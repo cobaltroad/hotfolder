@@ -95,6 +95,19 @@ describe Hotfolder do
       expect(Array).to have_received(:new)
       expect(Hotfolder::UploadFilesCommand).to have_received(:execute).exactly(4).times
     end
+
+    context 'error while building metadata' do
+      before do
+        allow(hotfiles.last)
+          .to receive(:build_metadata_using)
+          .and_raise
+      end
+
+      it 'leaves the errored file alone' do
+        test_instance.consume!
+        expect(Hotfolder::UploadFilesCommand).to have_received(:execute).exactly(3).times
+      end
+    end
   end
 
   context 'loads a config file' do
