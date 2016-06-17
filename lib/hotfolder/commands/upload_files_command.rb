@@ -9,7 +9,7 @@ module Hotfolder
         if response.success?
           Hotfolder.log "Successfully uploaded #{files.map(&:basename)}"
         else
-          Hotfolder.log "Error uploading #{files.map(&:basename)}"
+          Hotfolder.log "Error uploading #{files.map(&:basename)} #{response.body}"
         end
       end
     end

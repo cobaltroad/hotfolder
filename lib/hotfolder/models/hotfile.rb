@@ -62,6 +62,8 @@ module Hotfolder
           items.map do |hash|
             Hotfolder::Hotfile.new(hash, username)
           end
+        else
+          []
         end
       end
     end

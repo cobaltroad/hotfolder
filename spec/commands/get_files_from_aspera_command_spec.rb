@@ -7,7 +7,12 @@ describe Hotfolder::GetFilesFromAsperaCommand do
         .to receive(:post)
         .and_return(response)
     end
-    let(:response) { double(HTTParty::Response, success?: true, body: body) }
+    let(:response) do
+      double(HTTParty::Response,
+             success?: true,
+             :[] => '',
+             body: body)
+    end
     let(:body) do
       hash = YAML.load_file("spec/fixtures/#{fixture}")
       hash.to_json
@@ -36,7 +41,7 @@ describe Hotfolder::GetFilesFromAsperaCommand do
       let(:fixture) { 'list_items_no_such_directory.yml' }
 
       specify {
-        expect(subject).to eq nil
+        expect(subject).to eq []
       }
     end
   end

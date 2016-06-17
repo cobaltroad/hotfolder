@@ -4,7 +4,10 @@ module Hotfolder
 
     def execute(endpoint, path, username, password)
       response = AsperaClient::API.get_files(endpoint, basic_auth(username, password), path)
-      raise 'Error retrieving hotfolder files' unless response.success?
+      if !response.success? or response['error'].present?
+        error = response['error'] || "invalid username or password '#{username}'"
+        raise "Error retrieving hotfolder files: #{error}, path: #{path}"
+      end
       files = Hotfolder::Hotfile.build_from_response(response, username)
       unless files.blank?
         Hotfolder.log "Hotfolder files in #{path}: #{logged(files)}"

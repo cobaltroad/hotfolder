@@ -28,7 +28,7 @@ GIT
 PATH
   remote: .
   specs:
-    hotfolder (0.2.7)
+    hotfolder (0.2.8)
 
 GEM
   remote: https://rubygems.org/
