@@ -10,7 +10,7 @@ module Hotfolder
       end
       files = Hotfolder::Hotfile.build_from_response(response, username)
       unless files.blank?
-        Hotfolder.logger.try(:info, "#{path}: #{logged(files)}")
+        Hotfolder.logger.try(:info, "#{path}: #{files_with_mtime(files)}")
       end
       files
     end
@@ -24,7 +24,7 @@ module Hotfolder
       }
     end
 
-    def logged(array)
+    def files_with_mtime(array)
       array.map do |obj|
         "#{obj.basename} (#{obj.mtime})"
       end

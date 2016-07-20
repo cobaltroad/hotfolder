@@ -50,7 +50,7 @@ module Hotfolder
 
       num_batches.times do
         batch = @files_with_metadata.slice!(0,files_per_batch)
-        UploadFilesCommand.execute(batch, @ingest_type)
+        CreateFilesCommand.execute(batch, @ingest_type)
       end
     end
 

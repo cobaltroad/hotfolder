@@ -1,5 +1,5 @@
 module Hotfolder
-  module UploadFilesCommand
+  module CreateFilesCommand
     extend self
 
     def execute(files, ingest_type)
