@@ -69,7 +69,7 @@ describe Hotfolder do
     before do
       test_class.send :include, Hotfolder
       test_class.send :hotfolder_ingest_type, "runner"
-      test_class.send :define_method, :upload_files, ->() do
+      test_class.send :define_method, :create_files, ->() do
         Array.new
         super()
       end

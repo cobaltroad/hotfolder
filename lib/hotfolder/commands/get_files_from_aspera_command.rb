@@ -8,11 +8,7 @@ module Hotfolder
         error = response['error'] || "invalid username or password '#{username}'"
         raise "Error retrieving files: #{error}, path: #{path}"
       end
-      files = Hotfolder::Hotfile.build_from_response(response, username)
-      unless files.blank?
-        Hotfolder.logger.try(:info, "#{path}: #{files_with_mtime(files)}")
-      end
-      files
+      Hotfolder::Hotfile.build_from_response(response, username)
     end
 
     private
@@ -22,12 +18,6 @@ module Hotfolder
         username: username,
         password: password
       }
-    end
-
-    def files_with_mtime(array)
-      array.map do |obj|
-        "#{obj.basename} (#{obj.mtime})"
-      end
     end
   end
 end

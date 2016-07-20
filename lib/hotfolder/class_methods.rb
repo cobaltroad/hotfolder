@@ -4,9 +4,8 @@ module Hotfolder
       class_variable_set(:@@ingest_type, ingest_type)
     end
 
-    def hotfolder_logger(logger, logger_method)
+    def hotfolder_logger(logger)
       @@logger = logger
-      @@logger_method = logger_method #not currently used
     end
 
     def config(config)

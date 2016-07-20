@@ -28,7 +28,7 @@ GIT
 PATH
   remote: .
   specs:
-    hotfolder (0.2.8)
+    hotfolder (0.3.0)
 
 GEM
   remote: https://rubygems.org/
@@ -131,4 +131,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-   1.11.2
+   1.12.3
