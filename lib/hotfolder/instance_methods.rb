@@ -16,7 +16,6 @@ module Hotfolder
     attr_reader :metadata_config
     attr_reader :ready_class
 
-    attr_reader :new_files
     attr_reader :files_with_metadata
 
     def initialize
@@ -27,20 +26,18 @@ module Hotfolder
     end
 
     def consume!
-      in_progress_files = GetInProgressCommand.execute(@ingest_type)
-      all_files         = GetFilesFromAsperaCommand.execute(@aspera_endpoint,
-                                                  @source_file_path,
-                                                  @aspera_username,
-                                                  @aspera_password)
+      Hotfolder.logger.try(:info, "#{@name}: #{@source_file_path}")
 
-      @new_files  = get_new_files(in_progress_files, all_files)
-      ready_files = get_ready_files(new_files)
+      all_files         = get_all_files
+      in_progress_files = get_in_progress_files
+      new_files         = get_new_files(in_progress_files, all_files)
+      ready_files       = get_ready_files(new_files)
       @files_with_metadata = gather_metadata!(ready_files)
 
-      upload_files
+      create_files
     end
 
-    def upload_files
+    def create_files
       files_per_batch = @files_per_batch || 1
       num_batches = @files_with_metadata.size / files_per_batch
 
@@ -50,7 +47,7 @@ module Hotfolder
 
       num_batches.times do
         batch = @files_with_metadata.slice!(0,files_per_batch)
-        UploadFilesCommand.execute(batch, @ingest_type)
+        CreateFilesCommand.execute(batch, @ingest_type)
       end
     end
 
@@ -100,6 +97,30 @@ module Hotfolder
       end
     end
 
+    def get_all_files
+      files = GetFilesFromAsperaCommand.execute(
+        @aspera_endpoint,
+        @source_file_path,
+        @aspera_username,
+        @aspera_password)
+      files_with_mtime = files.map { |obj| "#{obj.basename} (#{obj.mtime})" }
+      Hotfolder.logger.try(:info, "#{@name}: #{files_with_mtime}")
+      files
+    end
+
+    def get_in_progress_files
+      in_progress = GetInProgressCommand.execute(@ingest_type)
+      Hotfolder.logger.try(:info, "#{@name}: #{in_progress}")
+      in_progress
+    end
+
+    def get_ready_files(new_files)
+      klass = @ready_class || GetReadyFilesCommand
+      files = klass.execute(new_files, @file_pickup_delay)
+      Hotfolder.logger.try(:info, "#{@name}: #{files.map(&:basename)}")
+      files
+    end
+
     def get_new_files(in_progress_files, folder_files)
       folder_files.select do |file|
         !in_progress_files.include? file.basename
@@ -112,16 +133,11 @@ module Hotfolder
           file.build_metadata_using(@metadata_config)
           file
         rescue Exception => e
-          Hotfolder.log "ERROR BUILDING METADATA #{e}"
+          Hotfolder.logger.try(:error, "ERROR BUILDING METADATA #{e}")
           nil
         end
       end
       mapped.compact
-    end
-
-    def get_ready_files(new_files)
-      klass = @ready_class || GetReadyFilesCommand
-      klass.execute(new_files, @file_pickup_delay)
     end
   end
 end

@@ -69,13 +69,13 @@ describe Hotfolder do
     before do
       test_class.send :include, Hotfolder
       test_class.send :hotfolder_ingest_type, "runner"
-      test_class.send :define_method, :upload_files, ->() do
+      test_class.send :define_method, :create_files, ->() do
         Array.new
         super()
       end
 
       allow(Array).to receive(:new)
-      allow(Hotfolder::UploadFilesCommand).to receive(:execute)
+      allow(Hotfolder::CreateFilesCommand).to receive(:execute)
       allow(Hotfolder::GetInProgressCommand)
         .to receive(:execute)
         .and_return([])
@@ -93,7 +93,7 @@ describe Hotfolder do
       expect(Hotfolder::GetInProgressCommand).to have_received(:execute)
       expect(Hotfolder::GetFilesFromAsperaCommand).to have_received(:execute)
       expect(Array).to have_received(:new)
-      expect(Hotfolder::UploadFilesCommand).to have_received(:execute).exactly(4).times
+      expect(Hotfolder::CreateFilesCommand).to have_received(:execute).exactly(4).times
     end
 
     context 'error while building metadata' do
@@ -105,7 +105,7 @@ describe Hotfolder do
 
       it 'leaves the errored file alone' do
         test_instance.consume!
-        expect(Hotfolder::UploadFilesCommand).to have_received(:execute).exactly(3).times
+        expect(Hotfolder::CreateFilesCommand).to have_received(:execute).exactly(3).times
       end
     end
   end

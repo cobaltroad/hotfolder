@@ -1,5 +1,5 @@
 module Hotfolder
-  module UploadFilesCommand
+  module CreateFilesCommand
     extend self
 
     def execute(files, ingest_type)
@@ -7,9 +7,9 @@ module Hotfolder
         upload_data = files.map { |f| f.metadata.runner_object }
         response = RunnerClient::API.create_asset_items_for_upload(upload_data, ingest_type)
         if response.success?
-          Hotfolder.log "Successfully uploaded #{files.map(&:basename)}"
+          Hotfolder.logger.try(:info, "Successfully created #{files.map(&:basename)}")
         else
-          Hotfolder.log "Error uploading #{files.map(&:basename)} #{response.body}"
+          Hotfolder.logger.try(:error, "ERROR CREATING #{files.map(&:basename)} #{response.body}")
         end
       end
     end
