@@ -112,7 +112,7 @@ module Hotfolder
           file.build_metadata_using(@metadata_config)
           file
         rescue Exception => e
-          Hotfolder.log "ERROR BUILDING METADATA #{e}"
+          Hotfolder.logger.try(:error, "ERROR BUILDING METADATA #{e}")
           nil
         end
       end

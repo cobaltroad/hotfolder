@@ -6,7 +6,7 @@ module Hotfolder
 
     def hotfolder_logger(logger, logger_method)
       @@logger = logger
-      @@logger_method = logger_method
+      @@logger_method = logger_method #not currently used
     end
 
     def config(config)
@@ -16,14 +16,9 @@ module Hotfolder
   end
 
   class << self
-    def log(message)
+    def logger
       if Hotfolder::ClassMethods.class_variables.include? :@@logger
-        logger = Hotfolder::ClassMethods.class_variable_get :@@logger
-        logger_method = Hotfolder::ClassMethods.class_variable_get :@@logger_method
-      end
-
-      if logger && logger_method
-        logger.send(logger_method, message)
+        Hotfolder::ClassMethods.class_variable_get :@@logger
       end
     end
   end
