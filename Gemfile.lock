@@ -8,6 +8,14 @@ GIT
       savon
 
 GIT
+  remote: git@github.com:spedmg/granite_logger.git
+  revision: e072596c6fc0d3847516a14a728c13e7795ca7d4
+  tag: 0.1.2
+  specs:
+    granite_logger (0.1.2)
+      log4r
+
+GIT
   remote: git@github.com:spedmg/nummer.git
   revision: 409df5bf59dcdbd9726eea8fb8126c5691d63a0a
   tag: 1.4.2
@@ -28,7 +36,7 @@ GIT
 PATH
   remote: .
   specs:
-    hotfolder (0.3.0)
+    hotfolder (0.3.1)
 
 GEM
   remote: https://rubygems.org/
@@ -64,6 +72,7 @@ GEM
       rack
     i18n (0.7.0)
     json (1.8.3)
+    log4r (1.1.10)
     method_source (0.8.2)
     mini_portile2 (2.0.0)
     minitest (5.8.4)
@@ -120,6 +129,7 @@ DEPENDENCIES
   aspera_client!
   bundler (~> 1.10)
   dotenv
+  granite_logger!
   hotfolder!
   httparty
   nummer!

@@ -26,7 +26,7 @@ module Hotfolder
     end
 
     def consume!
-      Hotfolder.logger.try(:info, "#{@name}: #{@source_file_path}")
+      GraniteLogger.logger.info "#{@name}: #{@source_file_path}"
 
       all_files         = get_all_files
       in_progress_files = get_in_progress_files
@@ -35,6 +35,17 @@ module Hotfolder
       @files_with_metadata = gather_metadata!(ready_files)
 
       create_files
+    end
+
+    def get_all_files
+      files = GetFilesFromAsperaCommand.execute(
+        @aspera_endpoint,
+        @source_file_path,
+        @aspera_username,
+        @aspera_password)
+      files_with_mtime = files.map { |obj| "#{obj.basename} (#{obj.mtime})" }
+      GraniteLogger.logger.info "#{@name}: #{files_with_mtime}"
+      files
     end
 
     def create_files
@@ -97,27 +108,16 @@ module Hotfolder
       end
     end
 
-    def get_all_files
-      files = GetFilesFromAsperaCommand.execute(
-        @aspera_endpoint,
-        @source_file_path,
-        @aspera_username,
-        @aspera_password)
-      files_with_mtime = files.map { |obj| "#{obj.basename} (#{obj.mtime})" }
-      Hotfolder.logger.try(:info, "#{@name}: #{files_with_mtime}")
-      files
-    end
-
     def get_in_progress_files
       in_progress = GetInProgressCommand.execute(@ingest_type)
-      Hotfolder.logger.try(:info, "#{@name}: #{in_progress}")
+      GraniteLogger.logger.info "#{@name}: #{in_progress}"
       in_progress
     end
 
     def get_ready_files(new_files)
       klass = @ready_class || GetReadyFilesCommand
       files = klass.execute(new_files, @file_pickup_delay)
-      Hotfolder.logger.try(:info, "#{@name}: #{files.map(&:basename)}")
+      GraniteLogger.logger.info "#{@name}: #{files.map(&:basename)}"
       files
     end
 
@@ -133,7 +133,7 @@ module Hotfolder
           file.build_metadata_using(@metadata_config)
           file
         rescue Exception => e
-          Hotfolder.logger.try(:error, "ERROR BUILDING METADATA #{e}")
+          GraniteLogger.logger.error "ERROR BUILDING METADATA #{e}"
           nil
         end
       end

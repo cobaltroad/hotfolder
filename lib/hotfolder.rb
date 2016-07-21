@@ -6,6 +6,7 @@ require 'nummer'
 require 'runner_client'
 require 'httparty'
 require 'aspera_client'
+require 'granite_logger'
 
 require_relative 'hotfolder/class_methods'
 require_relative 'hotfolder/instance_helpers'

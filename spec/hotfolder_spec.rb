@@ -1,6 +1,14 @@
 require 'spec_helper'
 
 describe Hotfolder do
+  let(:logger) do
+    double('logger', info: nil, error: nil)
+  end
+  before do
+    allow(GraniteLogger).to receive(:logger)
+      .and_return(logger)
+  end
+
   context 'no hotfolder_ingest_type' do
     let(:test_class) { Class.new }
     before do
